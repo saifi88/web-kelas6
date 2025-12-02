@@ -6,7 +6,7 @@
 const API_BASE = "";
 
 // Lama ujian (menit)
-const EXAM_DURATION_MINUTES = 90;
+const EXAM_DURATION_MINUTES = 60;
 
 // LocalStorage Key
 const LS_KEYS = {
@@ -696,6 +696,7 @@ async function submitExam(autoByTimer) {
     alert("Gagal mengirim jawaban ke server. Coba lagi atau lapor guru.");
   }
 }
+
 
 
 
