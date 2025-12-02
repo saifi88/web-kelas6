@@ -365,6 +365,7 @@ async function loadQuestions(mapelId) {
         String(row.c || ""),
         String(row.d || "")
       ]
+      stimulus: String(row.stimulus || "")
     }));
 
     answers = new Array(questions.length).fill(null);
@@ -425,8 +426,29 @@ function showQuestion() {
   const numEl = document.getElementById("question-number");
   const textEl = document.getElementById("question-text");
   const optionsEl = document.getElementById("options-container");
+  const stimulusEl = document.getElementById("stimulus");
 
   if (numEl) numEl.textContent = `Soal ${currentIndex + 1}`;
+  // tampilkan stimulus kalau ada
+  if (stimulusEl) {
+    if (q.stimulus || q.stimulusImageUrl) {
+      let html = "";
+
+      if (q.stimulus) {
+        html += `<p>${q.stimulus.replace(/\n/g, "<br>")}</p>`;
+      }
+
+      if (q.stimulusImageUrl) {
+        html += `<div class="stimulus-image"><img src="${q.stimulusImageUrl}" alt="Stimulus" /></div>`;
+      }
+
+      stimulusEl.innerHTML = html;
+      stimulusEl.classList.remove("hidden");
+    } else {
+      stimulusEl.innerHTML = "";
+      stimulusEl.classList.add("hidden");
+    }
+  }
   if (textEl) textEl.textContent = q.text;
   if (!optionsEl) return;
 
@@ -696,6 +718,7 @@ async function submitExam(autoByTimer) {
     alert("Gagal mengirim jawaban ke server. Coba lagi atau lapor guru.");
   }
 }
+
 
 
 
