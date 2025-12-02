@@ -5,14 +5,13 @@ export async function onRequestGet(context) {
     const { results } = await env.DB.prepare(
       `SELECT 
          id,
-         no_absen,
          nama,
          kelas,
          nis,
          nisn,
          jk
        FROM siswa
-       ORDER BY kelas ASC, no_absen ASC`
+       ORDER BY kelas ASC, nama ASC`
     ).all();
 
     return new Response(JSON.stringify(results), {
