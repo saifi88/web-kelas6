@@ -18,7 +18,8 @@ export async function onRequestGet(context) {
        a,
        b,
        c,
-       d
+       d,
+       stimulus
      FROM soal
      WHERE mapel_id = ?
      ORDER BY nomor ASC`
@@ -32,3 +33,4 @@ export async function onRequestGet(context) {
   });
 
 }
+
