@@ -570,4 +570,17 @@ body {
   .exam-timer {
     text-align: left;
   }
+  .stimulus {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #f3f4ff;
+  border-left: 4px solid #6366f1;
+  border-radius: 6px;
+  white-space: pre-wrap; /* biar enter di stimulus kebaca */
 }
+.hidden {
+  display: none;
+}
+
+}
+
