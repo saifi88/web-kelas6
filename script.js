@@ -500,8 +500,15 @@ function showQuestion() {
   if (nextBtn) nextBtn.disabled = timeOver || currentIndex === questions.length - 1;
 
   updateGrid();
+  // 🔥 PANGGIL MATHJAX UNTUK TEX
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    const elems = [textEl, optionsEl, stimulusEl].filter(Boolean);
+    MathJax.typesetPromise(elems).catch((err) =>
+      console.error("MathJax typeset error:", err)
+    );
+  }
 }
-
+
 // ======================================
 // AUTOSAVE JAWABAN
 // ======================================
