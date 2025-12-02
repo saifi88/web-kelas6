@@ -328,7 +328,7 @@ function initExamPage() {
   const infoEl = document.getElementById("student-info");
   if (infoEl) {
     const nama = student.nama || "";
-    const absen = student.no_absen || student.absen || "";
+    const absen = student.id || student.no_absen || "";
     const kelas = student.kelas || "";
     const mapelNama = student.mapelNama || "";
     infoEl.textContent =
