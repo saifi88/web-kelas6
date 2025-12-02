@@ -152,11 +152,19 @@ async function loadSiswaForIndex() {
     // rows = [{id, no_absen, nama, kelas, nis, nisn, jk}, ...]
     STUDENT_LIST = rows.slice();
 
+    // Urutkan berdasarkan kelas lalu nama
     STUDENT_LIST.sort((a, b) => {
-      const na = Number(a.no_absen || 0);
-      const nb = Number(b.no_absen || 0);
-      return na - nb;
+      const ka = String(a.kelas || "");
+      const kb = String(b.kelas || "");
+      if (ka < kb) return -1;
+      if (ka > kb) return 1;
+      const na = String(a.nama || "").toLowerCase();
+      const nb = String(b.nama || "").toLowerCase();
+      if (na < nb) return -1;
+      if (na > nb) return 1;
+      return 0;
     });
+
 
     select.innerHTML = "";
 
@@ -684,3 +692,4 @@ async function submitExam(autoByTimer) {
     alert("Gagal mengirim jawaban ke server. Coba lagi atau lapor guru.");
   }
 }
+
