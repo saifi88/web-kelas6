@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Ujian Online - SDN 3 Wonorejo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="index">
+  <div class="page-wrapper">
+    <header class="topbar">
+      <div class="brand">
+        <img src="https://i.imgur.com/uUdD70n.png" alt="Logo SDN 3 Wonorejo" class="logo">
+        <div class="brand-text">
+          <h1>SDN 3 Wonorejo</h1>
+          <p>Kec. Banyuputih &mdash; Kab. Situbondo</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="badge">Ujian Online</span>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="hero-card">
+        <div class="hero-text">
+          <h2>Ujian Akhir Semester Berbasis Web</h2>
+          <p>
+            Silakan pilih nama dan mata pelajaran ujian, kemudian klik
+            <strong>Mulai Ujian</strong>. Kerjakan dengan jujur dan mandiri.
+          </p>
+        </div>
+        <div class="hero-marquee">
+          <div class="marquee-container">
+            <div class="marquee">
+              Selamat mengerjakan ujian dengan jujur • Selamat mengerjakan ujian dengan jujur • Selamat mengerjakan ujian dengan jujur •
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card form-card">
+        <h3>Data Peserta Ujian</h3>
+        <form id="student-form" class="form-grid">
+          <!-- PILIH NAMA SISWA DARI SHEET SISWA -->
+          <div class="form-group">
+            <label for="siswa">Pilih Nama Siswa</label>
+            <select id="siswa" name="siswa" required disabled>
+              <option value="">Memuat daftar siswa...</option>
+            </select>
+            <small id="siswa-info" class="note small">
+              Daftar nama diambil otomatis dari data SISWA di Google Sheet. Jika namamu belum ada, segera lapor guru.
+            </small>
+          </div>
+
+          <!-- MAPEL MASIH DARI BANK SOAL -->
+          <div class="form-group">
+            <label for="mapel">Mata Pelajaran</label>
+            <select id="mapel" name="mapel" required disabled>
+              <option value="">Memuat daftar mata pelajaran...</option>
+            </select>
+            <small id="mapel-info" class="note small">
+              Daftar mata pelajaran diambil otomatis dari bank soal Google Sheet.
+            </small>
+          </div>
+
+          <!-- TEMPAT RINGKASAN BIODATA SISWA -->
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Ringkasan Data Siswa</label>
+            <div id="student-summary" class="card-mini">
+              <p class="note small" id="student-summary-placeholder">
+                Pilih nama siswa di atas. Data NIS, NISN, jenis kelamin, dan kelas akan muncul di sini.
+              </p>
+              <div id="student-summary-content" class="hidden">
+                <p><strong>Nama:</strong> <span id="sum-nama"></span></p>
+                <p><strong>No. Absen:</strong> <span id="sum-absen"></span></p>
+                <p><strong>Kelas:</strong> <span id="sum-kelas"></span></p>
+                <p><strong>NIS:</strong> <span id="sum-nis"></span></p>
+                <p><strong>NISN:</strong> <span id="sum-nisn"></span></p>
+                <p><strong>Jenis Kelamin:</strong> <span id="sum-jk"></span></p>
+              </div>
+            </div>
+            <small class="note small">
+              Pastikan data di atas sudah benar sebelum menekan tombol <strong>Mulai Ujian</strong>.
+            </small>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Mulai Ujian</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>© <span id="year"></span> Tim IT SDN 3 Wonorejo, Kec. Banyuputih - Kab. Situbondo</span>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const y = document.getElementById("year");
+      if (y) y.textContent = new Date().getFullYear();
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
