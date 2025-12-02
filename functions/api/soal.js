@@ -14,7 +14,7 @@ export async function onRequestGet(context) {
     `SELECT 
        id,
        nomor,
-       soal,
+       teks,
        a,
        b,
        c,
@@ -30,4 +30,5 @@ export async function onRequestGet(context) {
   return new Response(JSON.stringify(results), {
     headers: { "Content-Type": "application/json" },
   });
+
 }
