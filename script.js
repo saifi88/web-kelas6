@@ -187,15 +187,19 @@ async function loadSiswaForIndex() {
     placeholder.selected = true;
     select.appendChild(placeholder);
 
-    STUDENT_LIST.forEach((s) => {
-      const opt = document.createElement("option");
-      const absen = String(s.no_absen || "").padStart(2, "0");
-      const nama = String(s.nama || "").trim();
-      const kelas = String(s.kelas || "").trim();
-      opt.value = String(s.id);
-      opt.textContent = `${absen} - ${nama} (Kelas ${kelas})`;
-      select.appendChild(opt);
-    });
+   STUDENT_LIST.forEach((s, index) => {
+  const opt = document.createElement("option");
+  const absen = String(index + 1).padStart(2, "0"); // nomor urut di dropdown
+  const nama = String(s.nama || "").trim();
+  const kelas = String(s.kelas || "").trim();
+
+  // simpan absen virtual untuk ringkasan
+  s._absen = index + 1;
+
+  opt.value = String(s.id);
+  opt.textContent = `${absen} - ${nama} (Kelas ${kelas})`;
+  select.appendChild(opt);
+});
 
     select.disabled = false;
     if (info) {
@@ -241,7 +245,7 @@ function updateStudentSummary(row) {
   const jkEl = document.getElementById("sum-jk");
 
   if (namaEl) namaEl.textContent = String(row.nama || "").trim();
-  if (absenEl) absenEl.textContent = String(row.no_absen || "").trim();
+  if (absenEl) absenEl.textContent = String(row._absen || "").trim();
   if (kelasEl) kelasEl.textContent = String(row.kelas || "").trim();
   if (nisEl) nisEl.textContent = String(row.nis || "").trim();
   if (nisnEl) nisnEl.textContent = String(row.nisn || "").trim();
@@ -692,4 +696,5 @@ async function submitExam(autoByTimer) {
     alert("Gagal mengirim jawaban ke server. Coba lagi atau lapor guru.");
   }
 }
+
 
