@@ -349,7 +349,7 @@ async function loadQuestions(mapelId) {
 
   try {
     const rows = await apiGet(`/api/soal?mapel_id=${encodeURIComponent(mapelId)}`);
-    // rows: [{id, nomor, soal, a, b, c, d}, ...]
+    // rows: [{id, nomor, teks, a, b, c, d}, ...]
 
     if (!rows.length) {
       throw new Error(`Tidak ada soal untuk mata pelajaran ini.`);
@@ -358,7 +358,7 @@ async function loadQuestions(mapelId) {
     questions = rows.map((row) => ({
       id: row.id,
       nomor: row.nomor,
-      text: String(row.soal || ""),
+      text: String(row.teks || ""),
       options: [
         String(row.a || ""),
         String(row.b || ""),
@@ -696,5 +696,6 @@ async function submitExam(autoByTimer) {
     alert("Gagal mengirim jawaban ke server. Coba lagi atau lapor guru.");
   }
 }
+
 
 
