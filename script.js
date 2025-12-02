@@ -364,8 +364,8 @@ async function loadQuestions(mapelId) {
         String(row.b || ""),
         String(row.c || ""),
         String(row.d || "")
-      ]
-      stimulus: String(row.stimulus || ""),
+      ],
+      stimulus: String(row.stimulus || "")
     }));
 
     answers = new Array(questions.length).fill(null);
