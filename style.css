@@ -333,9 +333,8 @@ body {
   gap: 12px;
 }
 
-.hidden {
-  display: none;
-}
+/* Reusable hidden */
+.hidden { display: none !important; }
 
 /* QUESTION AREA */
 .question-area {
@@ -541,6 +540,45 @@ body {
   display: none;
 }
 
+/* =========================
+   STIMULUS (TEKS + GAMBAR)
+   ========================= */
+
+.stimulus {
+  margin: 0 0 1rem 0;
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border-left: 4px solid #3b82f6;
+  border-radius: 8px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+}
+
+.stimulus-text {
+  margin-bottom: 0.75rem;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+.stimulus-img-wrap {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.stimulus-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(2,6,23,0.06);
+}
+
+.stimulus-error {
+  color: #b91c1c;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .topbar {
@@ -570,52 +608,13 @@ body {
   .exam-timer {
     text-align: left;
   }
+
   .stimulus {
-  margin-bottom: 1rem;
-  padding: 0.75rem 1rem;
-  background-color: #f3f4ff;
-  border-left: 4px solid #6366f1;
-  border-radius: 6px;
-  white-space: pre-wrap; /* biar enter di stimulus kebaca */
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: #f3f4ff;
+    border-left: 4px solid #6366f1;
+    border-radius: 6px;
+    white-space: pre-wrap;
+  }
 }
-.hidden {
-  display: none;
-}
-/* Stimulus container */
-.stimulus {
-  margin: 0 0 1rem 0;
-  padding: 0.75rem 1rem;
-  background: #f8fafc; /* lembut */
-  border-left: 4px solid #3b82f6;
-  border-radius: 8px;
-  box-sizing: border-box;
-  white-space: pre-wrap; /* respect newline pada teks stimulus */
-}
-
-/* Teks stimulus */
-.stimulus-text {
-  margin-bottom: 0.75rem;
-  color: #0f172a;
-  line-height: 1.5;
-}
-
-/* Gambar stimulus wrap */
-.stimulus-img-wrap {
-  display: block;
-  text-align: center;
-  margin-top: 0.5rem;
-}
-
-/* Gambar stimulus responsif */
-.stimulus-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(2,6,23,0.06);
-}
-
-/* sembunyikan elemen dengan class .hidden */
-.hidden { display: none !important; }
-
-}
-
