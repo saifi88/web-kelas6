@@ -19,7 +19,8 @@ export async function onRequestGet(context) {
        b,
        c,
        d,
-       stimulus
+       stimulus,
+       stimulus_url_gambar
      FROM soal
      WHERE mapel_id = ?
      ORDER BY nomor ASC`
@@ -33,4 +34,5 @@ export async function onRequestGet(context) {
   });
 
 }
+
 
