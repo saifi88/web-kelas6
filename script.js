@@ -426,28 +426,40 @@ function showQuestion() {
   const numEl = document.getElementById("question-number");
   const textEl = document.getElementById("question-text");
   const optionsEl = document.getElementById("options-container");
-  const stimulusEl = document.getElementById("stimulus");
+  // di showQuestion(), setelah mem-provide q = questions[currentIndex]
+const stimulusEl = document.getElementById("stimulus");
+const stimulusTextEl = document.getElementById("stimulus-text");
+const stimulusImgWrap = document.getElementById("stimulus-img-wrap");
+const stimulusImg = document.getElementById("stimulus-image");
 
-  if (numEl) numEl.textContent = `Soal ${currentIndex + 1}`;
-  // tampilkan stimulus kalau ada
-  if (stimulusEl) {
-    if (q.stimulus || q.stimulusImageUrl) {
-      let html = "";
+if (q.stimulus || q.stimulusImageUrl) {
+  // teks stimulus
+  if (q.stimulus) {
+    stimulusTextEl.textContent = q.stimulus;
+    stimulusTextEl.classList.remove("hidden");
+  } else {
+    stimulusTextEl.textContent = "";
+    stimulusTextEl.classList.add("hidden");
+  }
 
-      if (q.stimulus) {
-        html += `<p>${q.stimulus.replace(/\n/g, "<br>")}</p>`;
-      }
+  // gambar stimulus
+  if (q.stimulusImageUrl) {
+    stimulusImg.src = q.stimulusImageUrl;
+    stimulusImg.alt = q.stimulus_alt || "Stimulus soal"; // opsional: isi alt dari DB
+    stimulusImgWrap.classList.remove("hidden");
+  } else {
+    stimulusImg.src = "";
+    stimulusImg.alt = "";
+    stimulusImgWrap.classList.add("hidden");
+  }
 
-      if (q.stimulusImageUrl) {
-        html += `<div class="stimulus-image"><img src="${q.stimulusImageUrl}" alt="Stimulus" /></div>`;
-      }
-
-      stimulusEl.innerHTML = html;
-      stimulusEl.classList.remove("hidden");
-    } else {
-      stimulusEl.innerHTML = "";
-      stimulusEl.classList.add("hidden");
-    }
+  stimulusEl.classList.remove("hidden");
+} else {
+  // tidak ada stimulus
+  stimulusTextEl.textContent = "";
+  stimulusImg.src = "";
+  stimulusImgWrap.classList.add("hidden");
+  stimulusEl.classList.add("hidden");
   }
   if (textEl) textEl.textContent = q.text;
   if (!optionsEl) return;
