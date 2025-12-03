@@ -54,13 +54,28 @@
         <div id="exam-content" class="hidden">
           <div class="question-area">
             <div class="question-header">
-              <span id="question-number" class="question-number">Soal 1</span>
-            </div>
-            <div id="stimulus" class="stimulus hidden">
-            </div>  
-            <div id="question-text" class="question-text">
-              <!-- isi soal -->
-            </div>
+  <span id="question-number" class="question-number">Soal 1</span>
+</div>
+
+<!-- ======= STIMULUS (TEKS + GAMBAR) ======= -->
+<div id="stimulus" class="stimulus hidden" aria-live="polite">
+  <!-- Teks stimulus (jika ada) akan diisi oleh script.js -->
+  <div id="stimulus-text" class="stimulus-text"></div>
+
+  <!-- Gambar stimulus; src diisi oleh script.js.
+       Kita sediakan elemen img supaya lebih mudah di-style dan ada fallback. -->
+  <div class="stimulus-img-wrap hidden" id="stimulus-img-wrap">
+    <img id="stimulus-image" class="stimulus-image" alt="Stimulus soal" loading="lazy" />
+    <noscript>
+      <p class="note small">(Gambar stimulus tidak tampil karena JavaScript dimatikan.)</p>
+    </noscript>
+  </div>
+</div>
+<!-- ======= /STIMULUS ======= -->
+
+<div id="question-text" class="question-text">
+  <!-- isi soal -->
+</div>
 
             <div id="options-container" class="options-container">
               <!-- opsi pilihan ganda -->
