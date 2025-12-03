@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Ujian Berlangsung - SDN 3 Wonorejo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* kecil dan aman — kamu bisa pindah ke style.css */
+    .stimulus { margin: 0 0 1rem 0; padding: 0.75rem 1rem; background:#f8fafc; border-left:4px solid #3b82f6; border-radius:8px; white-space:pre-wrap; }
+    .stimulus-text { margin-bottom:.75rem; color:#0f172a; line-height:1.5; }
+    .stimulus-img-wrap { display:block; text-align:center; margin-top:.5rem; }
+    .stimulus-image { max-width:100%; height:auto; border-radius:6px; box-shadow:0 4px 10px rgba(2,6,23,0.06); }
+    .hidden { display:none !important; }
+    .stimulus-error { color:#b91c1c; font-size:.95rem; margin-top:.5rem; }
+  </style>
 </head>
 <body data-page="ujian">
   <div class="page-wrapper">
     <header class="topbar">
       <div class="brand">
-        <img src="https://i.imgur.com/uUdD70n.png" alt="Logo SDN 3 Wonorejo" class="logo">
+        <img src="https://i.imgur.com/uUdD70n.png" alt="Logo SDN 3 Wonorejo" class="logo" />
         <div class="brand-text">
           <h1>SDN 3 Wonorejo</h1>
           <p>Ujian Online &mdash; Kec. Banyuputih, Kab. Situbondo</p>
         </div>
       </div>
+
       <div class="topbar-right exam-topbar-right">
-        <div class="exam-timer">
-          <span>Sisa Waktu</span>
-          <strong id="timer-display">60:00</strong>
-        </div>
+        <div class="exam-timer"><span>Sisa Waktu</span><strong id="timer-display">60:00</strong></div>
         <div class="exam-progress">
-          <div class="progress-label">
-            Progres Soal: <span id="progress-text">0 / 0</span>
-          </div>
-          <div class="progress-bar">
-            <div id="progress-bar-fill"></div>
-          </div>
+          <div class="progress-label">Progres Soal: <span id="progress-text">0 / 0</span></div>
+          <div class="progress-bar"><div id="progress-bar-fill"></div></div>
         </div>
       </div>
     </header>
@@ -36,50 +39,35 @@
       <section class="card exam-card">
         <header class="exam-header">
           <div class="exam-meta">
-            <p id="student-info" class="student-info">
-              <!-- Diisi dari script.js -->
-            </p>
+            <p id="student-info" class="student-info"><!-- Diisi dari script.js --></p>
             <p class="exam-instruction">
-              Kerjakan soal dengan teliti. Gunakan tombol <strong>Sebelumnya</strong> dan
-              <strong>Berikutnya</strong> untuk berpindah soal. Jangan menutup halaman sebelum
-              menekan <strong>Kirim Jawaban</strong> atau waktu habis.
+              Kerjakan soal dengan teliti. Gunakan tombol <strong>Sebelumnya</strong> dan <strong>Berikutnya</strong>.
             </p>
           </div>
         </header>
 
-        <div id="loading-questions" class="loading">
-          Memuat soal dari database
-        </div>
-      
+        <div id="loading-questions" class="loading">Memuat soal dari database</div>
+
         <div id="exam-content" class="hidden">
           <div class="question-area">
             <div class="question-header">
-  <span id="question-number" class="question-number">Soal 1</span>
-</div>
-
-<!-- ======= STIMULUS (TEKS + GAMBAR) ======= -->
-<div id="stimulus" class="stimulus hidden" aria-live="polite">
-  <!-- Teks stimulus (jika ada) akan diisi oleh script.js -->
-  <div id="stimulus-text" class="stimulus-text"></div>
-
-  <!-- Gambar stimulus; src diisi oleh script.js.
-       Kita sediakan elemen img supaya lebih mudah di-style dan ada fallback. -->
-  <div class="stimulus-img-wrap hidden" id="stimulus-img-wrap">
-    <img id="stimulus-image" class="stimulus-image" alt="Stimulus soal" loading="lazy" />
-    <noscript>
-      <p class="note small">(Gambar stimulus tidak tampil karena JavaScript dimatikan.)</p>
-    </noscript>
-  </div>
-</div>
-<!-- ======= /STIMULUS ======= -->
-
-<div id="question-text" class="question-text">
-  <!-- isi soal -->
-</div>
-
-            <div id="options-container" class="options-container">
-              <!-- opsi pilihan ganda -->
+              <span id="question-number" class="question-number">Soal 1</span>
             </div>
+
+            <!-- STIMULUS (TEKS + GAMBAR) -->
+            <div id="stimulus" class="stimulus hidden" aria-live="polite">
+              <div id="stimulus-text" class="stimulus-text"></div>
+
+              <div id="stimulus-img-wrap" class="stimulus-img-wrap hidden" aria-hidden="true">
+                <img id="stimulus-image" class="stimulus-image" alt="Stimulus soal" loading="lazy" />
+                <div id="stimulus-image-error" class="stimulus-error hidden">Gagal memuat gambar stimulus.</div>
+              </div>
+            </div>
+            <!-- /STIMULUS -->
+
+            <div id="question-text" class="question-text"><!-- isi soal --></div>
+
+            <div id="options-container" class="options-container"><!-- opsi --></div>
 
             <div class="exam-navigation">
               <button id="prev-btn" class="btn-secondary" type="button">Sebelumnya</button>
@@ -91,13 +79,8 @@
           <aside class="sidebar">
             <div class="question-overview card-mini">
               <h4>Daftar Soal</h4>
-              <p class="note small">
-                Klik nomor untuk lompat ke soal tertentu. Soal yang sudah dijawab akan
-                ditandai warna ungu.
-              </p>
-              <div id="question-grid" class="question-grid">
-                <!-- tombol nomor soal -->
-              </div>
+              <p class="note small">Klik nomor untuk lompat ke soal tertentu. Soal yang sudah dijawab akan ditandai warna ungu.</p>
+              <div id="question-grid" class="question-grid"><!-- tombol nomor soal --></div>
             </div>
           </aside>
         </div>
@@ -105,27 +88,18 @@
 
       <div id="message-area" class="message-area"></div>
 
-      <!-- MODAL RINGKASAN JAWABAN -->
+      <!-- modal summary (tetap ada jika diperlukan) -->
       <div id="summary-modal" class="modal-backdrop hidden">
         <div class="modal-box">
           <h3>Ringkasan Jawaban</h3>
-          <p id="summary-info" class="summary-info">
-            <!-- diisi via modal.js -->
-          </p>
-          <p id="summary-unanswered" class="summary-unanswered">
-            <!-- diisi via modal.js -->
-          </p>
+          <p id="summary-info" class="summary-info"></p>
+          <p id="summary-unanswered" class="summary-unanswered"></p>
           <div class="modal-actions">
-            <button id="summary-cancel" type="button" class="btn-secondary">
-              Kembali mengerjakan
-            </button>
-            <button id="summary-confirm" type="button" class="btn-primary">
-              Yakin kirim sekarang
-            </button>
+            <button id="summary-cancel" type="button" class="btn-secondary">Kembali mengerjakan</button>
+            <button id="summary-confirm" type="button" class="btn-primary">Yakin kirim sekarang</button>
           </div>
         </div>
       </div>
-
     </main>
 
     <footer class="footer">
@@ -139,13 +113,43 @@
       if (y) y.textContent = new Date().getFullYear();
     });
   </script>
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+
+  <!-- MathJax (untuk LaTeX) -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- small fallback JS: menangani error gambar saat browser mencoba load -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const img = document.getElementById("stimulus-image");
+      const wrap = document.getElementById("stimulus-img-wrap");
+      const err = document.getElementById("stimulus-image-error");
+
+      if (!img) return;
+
+      // saat gambar gagal dimuat
+      img.addEventListener("error", () => {
+        img.removeAttribute("src");
+        if (wrap) wrap.classList.add("hidden");
+        if (err) err.classList.remove("hidden");
+      });
+
+      // saat gambar berhasil dimuat (tampilkan container)
+      img.addEventListener("load", () => {
+        if (wrap) {
+          wrap.classList.remove("hidden");
+          wrap.setAttribute("aria-hidden", "false");
+        }
+        if (err) err.classList.add("hidden");
+      });
+
+      // jika script.js tidak menetapkan src (keadaan awal), sembunyikan
+      if (!img.getAttribute("src")) {
+        if (wrap) wrap.classList.add("hidden");
+      }
+    });
+  </script>
+
+  <!-- main app script -->
   <script src="script.js"></script>
 </body>
 </html>
-
-
