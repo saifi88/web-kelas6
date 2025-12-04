@@ -333,6 +333,14 @@ async function loadQuestions(mapelId) {
     loadingEl.textContent = "Gagal memuat soal.";
   }
 }
+// MathJax typeset (for LaTeX)
+  if (window.MathJax && MathJax.typesetPromise) {
+    // tunggu 50ms supaya browser menyelesaikan repaint; ini sering membantu pada mobile
+    setTimeout(() => {
+      MathJax.typesetPromise([textEl, optionsEl, stimulusEl])
+        .catch(err => console.error("MathJax typeset error:", err));
+    }, 50);
+  }
 /* ============================================================
    TAMPILKAN SOAL + STIMULUS + LATEX
    ============================================================ */
