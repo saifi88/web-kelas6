@@ -801,6 +801,76 @@ document.addEventListener("DOMContentLoaded", () => {
 // (panggil ini di akhir loadQuestions() setelah buildQuestionGrid/showQuestion)
 function ensureNavAfterLoad() {
   attachNavigationButtons();
+  attachSubmitButton();
+}
+// ====== ATTACH ROBUST SUBMIT HANDLER ======
+function attachSubmitButton() {
+  const old = document.getElementById("submit-btn");
+  if (!old) {
+    console.warn("attachSubmitButton: submit-btn not found");
+    return;
+  }
+
+  // replace node to clear old handlers (safe)
+  old.replaceWith(old.cloneNode(true));
+
+  const btn = document.getElementById("submit-btn");
+  if (!btn) return console.warn("submit-btn missing after clone");
+
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    if (timeOver) {
+      alert("Waktu telah habis. Tidak dapat mengirim jawaban.");
+      return;
+    }
+
+    // quick sanity checks
+    if (!questions || questions.length === 0) {
+      alert("Belum ada soal. Tidak ada yang dikirim.");
+      return;
+    }
+
+    // optional: confirm
+    const proceed = confirm("Yakin ingin mengirim jawaban sekarang?");
+    if (!proceed) return;
+
+    try {
+      btn.disabled = true;
+      const originalText = btn.textContent;
+      btn.textContent = "Mengirim...";
+
+      // panggil fungsi submitExam yang sudah ada
+      if (typeof submitExam === "function") {
+        // jika submitExam meng-handle confirm sendiri, kita tetap panggil dengan false
+        await submitExam(false);
+      } else {
+        throw new Error("submitExam() belum terdefinisi");
+      }
+    } catch (err) {
+      console.error("Kesalahan saat submit:", err);
+      alert("Terjadi kesalahan saat mengirim. Cek koneksi atau lihat console.");
+    } finally {
+      // restore (submitExam biasanya redirect ke index.html setelah sukses,
+      // tapi restore masih berguna jika gagal)
+      if (document.getElementById("submit-btn")) {
+        document.getElementById("submit-btn").disabled = false;
+        // restore teks bila masih berada di halaman
+        document.getElementById("submit-btn").textContent = "Kirim Jawaban";
+      }
+    }
+  });
+}
+
+// pasang saat DOM siap
+document.addEventListener("DOMContentLoaded", () => {
+  attachSubmitButton();
+});
+
+// juga pasang ulang setelah loadQuestions() selesai
+// (jika kamu memanggil attachNavigationButtons() di akhir loadQuestions, juga panggil attachSubmitButton)
+function ensureUiAfterLoad() {
+  attachNavigationButtons?.();
+  attachSubmitButton();
 }
 
 /* ============================================================
