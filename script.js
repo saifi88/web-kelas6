@@ -736,6 +736,64 @@ async function flushPendingSubmissions() {
     }
   }
 }
+// ====== NAVIGATION BUTTONS (robust attach) ======
+function attachNavigationButtons() {
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+
+  if (prevBtn) {
+    // remove existing to avoid double handlers
+    prevBtn.replaceWith(prevBtn.cloneNode(true));
+  }
+  if (nextBtn) {
+    nextBtn.replaceWith(nextBtn.cloneNode(true));
+  }
+
+  const newPrev = document.getElementById("prev-btn");
+  const newNext = document.getElementById("next-btn");
+
+  if (newPrev) {
+    newPrev.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (timeOver) return;
+      if (!questions || questions.length === 0) return;
+      if (currentIndex > 0) {
+        currentIndex--;
+        // simpan sebelum tampilkan
+        const student = JSON.parse(localStorage.getItem(LS_KEYS.student) || "{}");
+        saveAnswersToStorage(String(student.mapel_id ?? student.mapelId ?? ""));
+        showQuestion();
+        updateGrid();
+      }
+    });
+  }
+
+  if (newNext) {
+    newNext.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (timeOver) return;
+      if (!questions || questions.length === 0) return;
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        const student = JSON.parse(localStorage.getItem(LS_KEYS.student) || "{}");
+        saveAnswersToStorage(String(student.mapel_id ?? student.mapelId ?? ""));
+        showQuestion();
+        updateGrid();
+      }
+    });
+  }
+}
+
+// Pasang handler segera setelah DOM siap
+document.addEventListener("DOMContentLoaded", () => {
+  attachNavigationButtons();
+});
+
+// Jika kamu memuat soal secara dinamis (loadQuestions), pasang ulang setelah soal dimuat
+// (panggil ini di akhir loadQuestions() setelah buildQuestionGrid/showQuestion)
+function ensureNavAfterLoad() {
+  attachNavigationButtons();
+}
 
 /* ============================================================
    AKHIR FILE
