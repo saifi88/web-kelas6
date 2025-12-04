@@ -186,7 +186,7 @@ async function loadSiswaForIndex() {
     // placeholder
     const ph = document.createElement("option");
     ph.value = "";
-    ph.textContent = "Pilih nama siswa...";
+    ph.textContent = "Pilih namamu";
     ph.disabled = true;
     ph.selected = true;
     select.appendChild(ph);
