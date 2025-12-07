@@ -1,8 +1,10 @@
 export async function onRequestPost(context) {
   const { env, request } = context;
   const body = await request.json();
-  const { ujian_siswa_id, answers } = body;
 
+  const { ujian_siswa_id, answers, finalScore } = body;
+
+  // Validasi dasar
   if (!ujian_siswa_id || !Array.isArray(answers)) {
     return new Response(JSON.stringify({ error: "Data kurang" }), {
       status: 400,
@@ -11,40 +13,32 @@ export async function onRequestPost(context) {
   }
 
   let totalSkor = 0;
-  let maxSkor = 0;
   let benarCount = 0;
 
   for (const ans of answers) {
-    const { soal_id, jawaban } = ans;
-    if (!soal_id || !jawaban) continue;
+    const soalId = ans.soal_id;
+    if (!soalId) continue;
 
-    const soal = await env.DB
-      .prepare("SELECT kunci, skor FROM soal WHERE id = ?")
-      .bind(soal_id)
-      .first();
+    const jawaban = (ans.jawaban || "").toString().toUpperCase();
+    const benar = ans.benar ? 1 : 0;           // dari frontend
+    const skor = Number(ans.skor || 0);        // dari frontend
 
-    if (!soal) continue;
+    totalSkor += skor;
+    if (benar) benarCount++;
 
-    const skor = Number(soal.skor || 0);
-    maxSkor += skor;
-
-    const isBenar = jawaban.toUpperCase() === String(soal.kunci || "").toUpperCase();
-    if (isBenar) {
-      totalSkor += skor;
-      benarCount++;
-    }
-
+    // ⚠ pakai kolom "ujian_siswa_id" sesuai dengan struktur tabel kamu
     await env.DB
       .prepare(
-        `INSERT INTO jawaban (ujian_siswa_id, soal_id, jawaban, benar)
-         VALUES (?, ?, ?, ?)`
+        `INSERT INTO jawaban (ujian_siswa_id, soal_id, jawaban, benar, skor)
+         VALUES (?, ?, ?, ?, ?)`
       )
-      .bind(ujian_siswa_id, soal_id, jawaban.toUpperCase(), isBenar ? 1 : 0)
+      .bind(ujian_siswa_id, soalId, jawaban, benar, skor)
       .run();
   }
 
-  const finalScore =
-    maxSkor > 0 ? Math.round((totalSkor / maxSkor) * 10000) / 100 : 0;
+  // nilai akhir: pakai dari frontend kalau ada, kalau tidak pakai totalSkor
+  const nilaiAkhir =
+    typeof finalScore === "number" ? finalScore : totalSkor;
 
   await env.DB
     .prepare(
@@ -52,15 +46,14 @@ export async function onRequestPost(context) {
        SET nilai = ?, waktu_selesai = datetime('now')
        WHERE id = ?`
     )
-    .bind(finalScore, ujian_siswa_id)
+    .bind(nilaiAkhir, ujian_siswa_id)
     .run();
 
   return new Response(
     JSON.stringify({
       totalSkor,
-      maxSkor,
       benarCount,
-      finalScore,
+      finalScore: nilaiAkhir,
     }),
     { headers: { "Content-Type": "application/json" } }
   );
